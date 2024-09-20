@@ -1,9 +1,24 @@
-// @todo: Темплейт карточки
+const cardList = document.querySelector('.places__list');
 
-// @todo: DOM узлы
+function createCard (title, imgLink, deleteCallback) {
+	const cardTemplate = document.querySelector('#card-template').content;
+	const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  
+	cardElement.querySelector('.card__image').src = imgLink;
+	cardElement.querySelector('.card__image').alt = title;
+	cardElement.querySelector('.card__title').textContent = title;
+	cardElement.querySelector('.card__delete-button').addEventListener('click', deleteCallback);
+	cardList.append(cardElement)
+  }
 
-// @todo: Функция создания карточки
+function deleteCard (event) {
+	const deleteBtn = event.target;
+	const cardContainer = deleteBtn.closest('.card');
+	cardContainer.remove();
+}
 
-// @todo: Функция удаления карточки
-
-// @todo: Вывести карточки на страницу
+window.onload = () => {
+	initialCards.forEach((card) => {
+		createCard(card.name, card.link, deleteCard);
+	});
+}
