@@ -6,14 +6,12 @@ function createCard (cardData, deleteCallback) {
 	const img = cardElement.querySelector('.card__image');
 	img.src = cardData.link;
 	img.alt = cardData.name;
-	cardElement.querySelector('.card__title').textContent = title;
+	cardElement.querySelector('.card__title').textContent = cardData.name;
 	cardElement.querySelector('.card__delete-button').addEventListener('click', () => deleteCallback(cardElement));
 	return cardElement;
   }
 
 function deleteCard (cardElement) {
-	// const deleteBtn = event.target;
-	// const cardContainer = deleteBtn.closest('.card');
 	cardElement.remove();
 }
 
