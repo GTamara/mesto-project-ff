@@ -1,3 +1,6 @@
+import './styles/index.css';
+import { initialCards } from './constants/initial-card-elements.js';
+
 const cardList = document.querySelector('.places__list');
 
 function createCard (cardData, deleteCallback) {
@@ -19,3 +22,5 @@ initialCards.forEach((cardData) => {
 	const card = createCard(cardData, deleteCard);
 	cardList.append(card)
 });
+
+console.log(initialCards)
