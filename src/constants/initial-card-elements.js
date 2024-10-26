@@ -36,5 +36,3 @@ export const initialCards = [
 		),
 	}
 ];
-
-alert('ddddd11')
