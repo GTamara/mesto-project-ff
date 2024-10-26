@@ -1,8 +1,6 @@
 import './styles/index.css';
 import { initialCards } from './constants/initial-card-elements.js';
-import { Card } from './components/card.js';
 import { CSS_CONSTANTS } from './constants/css-constants.js';
-// import  CSS_CONSTANTS  from './constants/css-constants.js';
 import { POPUP_TYPES } from './constants/popup-types.js';
 import { Modal } from './components/modal.js';
 import { EditProfile } from './components/edit-profile.js';

@@ -1,25 +1,9 @@
 import { CSS_CONSTANTS } from "../constants/css-constants";
 
-
 export class Modal {
 
 	create = (modalType, submitCallback) => {
 		const popup = document.querySelector(`.${modalType}`)
-		// popup.classList.remove(CSS_CONSTANTS.popupHidden);
-
-		// обработчики закрытия попапа
-		// popup.addEventListener(
-		// 		'click', 
-		// 		(evt) => {
-		// 			if (
-		// 				evt.target.classList.contains(CSS_CONSTANTS.closePopupButton)
-		// 				|| evt.target.classList.contains(CSS_CONSTANTS.closePopupButton)
-		// 			) {
-		// 				this.close(popup);
-		// 				evt.stopPropagation();
-		// 			}
-		// 		},
-		// 	);
 
 		popup.addEventListener(
 			'click', 
@@ -34,10 +18,10 @@ export class Modal {
 				}
 			},
 		);
-		// debugger
+
 		// обработчики закрытия попапа END
 		if (!!submitCallback) {
-			popup.querySelector(`.popup__form`)
+			popup.querySelector(`.${CSS_CONSTANTS.form}`)
 				.addEventListener(
 					'submit', 
 					(evt) => {
@@ -61,10 +45,10 @@ export class Modal {
 
 	open (modalType) {
 		const popup = document.querySelector(`.${modalType}`)
-		popup.classList.remove(CSS_CONSTANTS.popupHidden);
+		popup.classList.add(CSS_CONSTANTS.popupIsopened);
 	}
 
 	close (popup) {
-		popup.classList.add(CSS_CONSTANTS.popupHidden);
+		popup.classList.remove(CSS_CONSTANTS.popupIsopened);
 	}
 }

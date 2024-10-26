@@ -12,6 +12,7 @@
 
 export const CSS_CONSTANTS = Object.freeze({
 	popupHidden: 'popup-hidden',
+	popupIsopened: 'popup_is-opened',
 	closePopupButton: 'popup__close',
 	editProfileButton: 'profile__edit-button',
 	addNewCardButton: 'profile__add-button',
@@ -27,5 +28,3 @@ export const CSS_CONSTANTS = Object.freeze({
 	form: 'popup__form',
 	submitButton: 'popup__button',
 })
-
-//export default

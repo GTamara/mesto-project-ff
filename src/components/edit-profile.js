@@ -1,17 +1,10 @@
-const EDIT_PROFILE_CSS_SELECTORS = {
+const EDIT_PROFILE_CSS_SELECTORS = Object.freeze({
 	formName: 'edit-profile',
 	currentProfileName: 'profile__title',
 	currentProfileJob: 'profile__description',
-}
+});
 
 export class EditProfile {
-
-	static get name() { return 'edit-profile'; }
-
-	constructor() {
-		this.name = EDIT_PROFILE_CSS_SELECTORS.formName;
-		console.log('this.name', this.name)
-	}
 
 	open () {
 		this.fillPopupWithProfileData();

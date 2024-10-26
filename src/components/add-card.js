@@ -1,22 +1,15 @@
 import { CSS_CONSTANTS } from "../constants/css-constants";
 
-const ADD_PROFILE_CSS_SELECTORS = {
+const ADD_PROFILE_CSS_SELECTORS = Object.freeze({
 	formName: 'new-place',
 	cardsContainer: 'places__list',
 	likeActive: 'card__like-button_is-active',
-	// currentProfileName: 'profile__title',
-	// currentProfileJob: 'profile__description',
-
-}
+});
 
 export class AddCard {
 
 	formElement = document.forms[ADD_PROFILE_CSS_SELECTORS.formName];
 	submitButton = this.formElement.querySelector(`.${CSS_CONSTANTS.submitButton}`);
-
-	// constructor() {
-	// 	this.name = ADD_PROFILE_CSS_SELECTORS.formName;
-	// }
 
 	preparePopupBeforeOpening () {
 		this.formElement.reset();
@@ -56,7 +49,6 @@ export class AddCard {
 	}
 
 	addNewCardPopupSubmit = () => {
-		// https://www.shutterstock.com/shutterstock/photos/2479863909/display_1500/stock-photo-aerial-view-of-lush-river-delta-2479863909.jpg
 		const newCardData = this.getFormData();
 		const card = this.createCard(newCardData);
 		this.addNewCardToCardContainer(card);
