@@ -5,16 +5,26 @@ import { POPUP_TYPES } from './constants/popup-types.js';
 import { Modal } from './components/modal.js';
 import { EditProfile } from './components/edit-profile.js';
 import { AddCard } from './components/add-card.js';
-import { ShowFullSizeImage } from './components/show-full-size-image.js';
+import { Card } from './components/card.js';
+import { CardActions } from './components/card-actions.js';
 
-const cardList = document.querySelector(`.${CSS_CONSTANTS.cardContainer}`);
 const addCardInstance = new AddCard();
-const modal = new Modal();
 const editProfileInstance = new EditProfile();
-const showFullSizeImageInstance = new ShowFullSizeImage();
+
+const editProfilePopup = new Modal(POPUP_TYPES.editProfile, editProfileInstance.setNewProfileDataSubmit);
+const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
+
+const card = new Card();
+const cardActions = new CardActions();
 
 initialCards.forEach((cardData) => {
-	const cardElement = addCardInstance.createCard(cardData);
+	const cardElement = card.create(
+		cardData,
+		cardActions.cardClick,
+		cardActions.deleteCard,
+		cardActions.toggleLike,
+	);
+	
 	addCardInstance.addNewCardToCardContainer(cardElement);
 });
 
@@ -24,7 +34,7 @@ document.querySelector(`.${CSS_CONSTANTS.editProfileButton}`)
 		'click', 
 		() => {
 			editProfileInstance.preparePopupBeforeOpening();
-			modal.open(POPUP_TYPES.editProfile);
+			editProfilePopup.open();
 		},
 	);
 
@@ -34,28 +44,11 @@ document.querySelector(`.${CSS_CONSTANTS.addNewCardButton}`)
 		'click', 
 		() => {
 			addCardInstance.preparePopupBeforeOpening();
-			modal.open(POPUP_TYPES.addNewCard);
+			addCardPopup.open();
 		},
 	);
 
-// слушатель клика по карточке для открытия изображения
-cardList.addEventListener( 
-	'click', 
-	(evt) => {
-		const clickedCard = evt.target.closest(`.${CSS_CONSTANTS.cardItem}`);
-		if (!!clickedCard) {
-			showFullSizeImageInstance.preparePopupBeforeOpening(
-				clickedCard,
-				() => modal.open(POPUP_TYPES.showFullSizeImage),
-			);
-		}
-		
-		evt.stopPropagation();
-	},
-);
 
-modal.create(POPUP_TYPES.editProfile, editProfileInstance.setNewProfileDataSubmit);
-modal.create(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
-modal.create(POPUP_TYPES.showFullSizeImage);
+
 
 

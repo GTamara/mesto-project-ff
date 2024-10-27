@@ -6,11 +6,6 @@ const EDIT_PROFILE_CSS_SELECTORS = Object.freeze({
 
 export class EditProfile {
 
-	open () {
-		this.fillPopupWithProfileData();
-		popup.classList.remove(CSS_CONSTANTS.popupHidden);
-	}
-	
 	preparePopupBeforeOpening () {
 		// fill popup with profile data
 		const currentProfileData = this.getProfileData();

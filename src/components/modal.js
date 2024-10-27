@@ -2,53 +2,59 @@ import { CSS_CONSTANTS } from "../constants/css-constants";
 
 export class Modal {
 
-	create = (modalType, submitCallback) => {
-		const popup = document.querySelector(`.${modalType}`)
+	popup = undefined;
 
-		popup.addEventListener(
+	constructor (modalType, submitCallback) {
+		this.popup = document.querySelector(`.${modalType}`)
+
+		this.popup.addEventListener(
 			'click', 
-			(evt) => this.closePopupEventHandler(evt, popup),
-		);
-
-		document.addEventListener(
-			'keydown', 
-			(evt) => {
-				if (evt.code === 'Escape') {
-					this.close(popup);
-				}
-			},
+			this.closePopupEventHandler,
 		);
 
 		// обработчики закрытия попапа END
 		if (!!submitCallback) {
-			popup.querySelector(`.${CSS_CONSTANTS.form}`)
+			this.popup.querySelector(`.${CSS_CONSTANTS.form}`)
 				.addEventListener(
 					'submit', 
 					(evt) => {
 						submitCallback();
 						evt.preventDefault();
-						this.close(popup);
+						this.close(this.popup);
 					}
 				);
 		}
 	}
 
-	closePopupEventHandler (event, popup) {
+	close (popup) {
+		popup.classList.remove(CSS_CONSTANTS.popupIsOpened);
+		document.removeEventListener(
+			'keydown', 
+			this.closeByEscape,
+		);
+	}
+
+	closePopupEventHandler = (event) => {
 		if (
 			event.target.classList.contains(CSS_CONSTANTS.popupBackdrop)
 			|| event.target.classList.contains(CSS_CONSTANTS.closePopupButton)
 		) {
-			this.close(popup);
+			this.close(this.popup);
 			event.stopPropagation();
 		}
 	}
 
-	open (modalType) {
-		const popup = document.querySelector(`.${modalType}`)
-		popup.classList.add(CSS_CONSTANTS.popupIsopened);
+	open () {
+		this.popup.classList.add(CSS_CONSTANTS.popupIsOpened);
+		document.addEventListener(
+			'keydown', 
+			this.closeByEscape,
+		);
 	}
 
-	close (popup) {
-		popup.classList.remove(CSS_CONSTANTS.popupIsopened);
+	closeByEscape = (evt) => {
+		if (evt.code === 'Escape') {
+			this.close(this.popup);
+		}
 	}
 }
