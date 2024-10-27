@@ -5,20 +5,26 @@ import { POPUP_TYPES } from './constants/popup-types.js';
 import { Modal } from './components/modal.js';
 import { EditProfile } from './components/edit-profile.js';
 import { AddCard } from './components/add-card.js';
-import { ShowFullSizeImage } from './components/show-full-size-image.js';
-
-const cardList = document.querySelector(`.${CSS_CONSTANTS.cardContainer}`);
+import { Card } from './components/card.js';
+import { CardActions } from './components/card-actions.js';
 
 const addCardInstance = new AddCard();
 const editProfileInstance = new EditProfile();
-const showFullSizeImageInstance = new ShowFullSizeImage();
 
 const editProfilePopup = new Modal(POPUP_TYPES.editProfile, editProfileInstance.setNewProfileDataSubmit);
 const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
-const showFullSizeImagePopup = new Modal(POPUP_TYPES.showFullSizeImage);
+
+const card = new Card();
+const cardActions = new CardActions();
 
 initialCards.forEach((cardData) => {
-	const cardElement = addCardInstance.createCard(cardData);
+	const cardElement = card.create(
+		cardData,
+		cardActions.cardClick,
+		cardActions.deleteCard,
+		cardActions.toggleLike,
+	);
+	
 	addCardInstance.addNewCardToCardContainer(cardElement);
 });
 
@@ -42,21 +48,6 @@ document.querySelector(`.${CSS_CONSTANTS.addNewCardButton}`)
 		},
 	);
 
-// слушатель клика по карточке для открытия изображения
-cardList.addEventListener( 
-	'click', 
-	(evt) => {
-		const clickedCard = evt.target.closest(`.${CSS_CONSTANTS.cardItem}`);
-		if (!!clickedCard) {
-			showFullSizeImageInstance.preparePopupBeforeOpening(
-				clickedCard,
-				() => showFullSizeImagePopup.open(),
-			);
-		}
-		
-		evt.stopPropagation();
-	},
-);
 
 
 

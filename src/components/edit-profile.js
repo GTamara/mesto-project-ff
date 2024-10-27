@@ -1,5 +1,3 @@
-import { CSS_CONSTANTS } from "../constants/css-constants";
-
 const EDIT_PROFILE_CSS_SELECTORS = Object.freeze({
 	formName: 'edit-profile',
 	currentProfileName: 'profile__title',

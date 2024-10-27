@@ -1,24 +1,28 @@
 import { CSS_CONSTANTS } from "../constants/css-constants";
+import { Card } from "./card";
+import { CardActions } from "./card-actions";
 
-const ADD_PROFILE_CSS_SELECTORS = Object.freeze({
+const ADD_NEW_CARD_CSS_SELECTORS = Object.freeze({
 	formName: 'new-place',
 	cardsContainer: 'places__list',
-	likeActive: 'card__like-button_is-active',
 });
 
 export class AddCard {
 
-	formElement = document.forms[ADD_PROFILE_CSS_SELECTORS.formName];
+	card = new Card();
+	cardActions = new CardActions();
+
+	formElement = document.forms[ADD_NEW_CARD_CSS_SELECTORS.formName];
 	submitButton = this.formElement.querySelector(`.${CSS_CONSTANTS.submitButton}`);
+	cardList = document.querySelector(`.${ADD_NEW_CARD_CSS_SELECTORS.cardsContainer}`);
 
 	preparePopupBeforeOpening () {
 		this.formElement.reset();
 	}
 
 	getFormData() {
-		const formElement = document.forms[ADD_PROFILE_CSS_SELECTORS.formName];
-		const placeNameInput = formElement.elements['place-name'];
-		const linkInput = formElement.elements.link;
+		const placeNameInput = this.formElement.elements['place-name'];
+		const linkInput = this.formElement.elements.link;
 
 		return {
 			name: placeNameInput.value,
@@ -26,36 +30,18 @@ export class AddCard {
 		}
 	}
 
-	deleteCard(evt, card) {
-		evt.stopPropagation();
-		card.remove();
-		
-	}
-
-	createCard = (cardData) => {
-		const cardTemplate = document.querySelector('#card-template').content;
-		const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-		const img = cardElement.querySelector('.card__image');
-		img.src = cardData.link;
-		img.alt = cardData.name;
-		cardElement.querySelector('.card__title').textContent = cardData.name;
-		cardElement
-			.querySelector('.card__delete-button')
-			.addEventListener('click', (evt) => this.deleteCard(evt, cardElement));
-		cardElement.querySelector('.card__like-button').addEventListener('click', (evt) => {
-			evt.target.classList.toggle(ADD_PROFILE_CSS_SELECTORS.likeActive);
-		});
-		return cardElement;
-	}
-
 	addNewCardPopupSubmit = () => {
 		const newCardData = this.getFormData();
-		const card = this.createCard(newCardData);
-		this.addNewCardToCardContainer(card);
+		const newCard = this.card.create(
+			newCardData,
+			this.cardActions.cardClick,
+			this.cardActions.deleteCard,
+			this.cardActions.toggleLike,
+		);
+		this.addNewCardToCardContainer(newCard);
 	}
 
 	addNewCardToCardContainer (cardElement) {
-		const cardList = document.querySelector(`.${ADD_PROFILE_CSS_SELECTORS.cardsContainer}`);
-		cardList.prepend(cardElement);
+		this.cardList.prepend(cardElement);
 	}
 }
