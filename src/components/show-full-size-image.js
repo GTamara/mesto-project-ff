@@ -31,5 +31,6 @@ export class ShowFullSizeImage {
 		popupCaptionElem.textContent = data.caption;
 
 		popupImageElem.onload = callback;
+		popupImageElem.onerror = callback;
 	}
 }

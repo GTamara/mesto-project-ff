@@ -8,10 +8,14 @@ import { AddCard } from './components/add-card.js';
 import { ShowFullSizeImage } from './components/show-full-size-image.js';
 
 const cardList = document.querySelector(`.${CSS_CONSTANTS.cardContainer}`);
+
 const addCardInstance = new AddCard();
-const modal = new Modal();
 const editProfileInstance = new EditProfile();
 const showFullSizeImageInstance = new ShowFullSizeImage();
+
+const editProfilePopup = new Modal(POPUP_TYPES.editProfile, editProfileInstance.setNewProfileDataSubmit);
+const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
+const showFullSizeImagePopup = new Modal(POPUP_TYPES.showFullSizeImage);
 
 initialCards.forEach((cardData) => {
 	const cardElement = addCardInstance.createCard(cardData);
@@ -24,7 +28,7 @@ document.querySelector(`.${CSS_CONSTANTS.editProfileButton}`)
 		'click', 
 		() => {
 			editProfileInstance.preparePopupBeforeOpening();
-			modal.open(POPUP_TYPES.editProfile);
+			editProfilePopup.open();
 		},
 	);
 
@@ -34,7 +38,7 @@ document.querySelector(`.${CSS_CONSTANTS.addNewCardButton}`)
 		'click', 
 		() => {
 			addCardInstance.preparePopupBeforeOpening();
-			modal.open(POPUP_TYPES.addNewCard);
+			addCardPopup.open();
 		},
 	);
 
@@ -46,7 +50,7 @@ cardList.addEventListener(
 		if (!!clickedCard) {
 			showFullSizeImageInstance.preparePopupBeforeOpening(
 				clickedCard,
-				() => modal.open(POPUP_TYPES.showFullSizeImage),
+				() => showFullSizeImagePopup.open(),
 			);
 		}
 		
@@ -54,8 +58,6 @@ cardList.addEventListener(
 	},
 );
 
-modal.create(POPUP_TYPES.editProfile, editProfileInstance.setNewProfileDataSubmit);
-modal.create(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
-modal.create(POPUP_TYPES.showFullSizeImage);
+
 
 
