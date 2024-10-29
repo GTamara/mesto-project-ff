@@ -8,14 +8,13 @@ import { AddCard } from './components/add-card.js';
 import { Card } from './components/card.js';
 import { CardActions } from './components/card-actions.js';
 
-const addCardInstance = new AddCard();
+const card = new Card();
+const cardActions = new CardActions();
+const addCardInstance = new AddCard(card, cardActions);
 const editProfileInstance = new EditProfile();
 
 const editProfilePopup = new Modal(POPUP_TYPES.editProfile, editProfileInstance.setNewProfileDataSubmit);
 const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
-
-const card = new Card();
-const cardActions = new CardActions();
 
 initialCards.forEach((cardData) => {
 	const cardElement = card.create(
