@@ -30,7 +30,6 @@ export class ShowFullSizeImage {
 		popupImageElem.alt = data.alt || data.caption;
 		popupCaptionElem.textContent = data.caption;
 
-		popupImageElem.onload = callback;
-		popupImageElem.onerror = callback;
+		callback();
 	}
 }

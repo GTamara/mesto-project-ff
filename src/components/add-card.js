@@ -9,8 +9,13 @@ const ADD_NEW_CARD_CSS_SELECTORS = Object.freeze({
 
 export class AddCard {
 
-	card = new Card();
-	cardActions = new CardActions();
+	card = undefined;
+	cardActions = undefined;
+
+	constructor (card, cardActions) {
+		this.card = card;
+		this.cardActions = cardActions;
+	}
 
 	formElement = document.forms[ADD_NEW_CARD_CSS_SELECTORS.formName];
 	submitButton = this.formElement.querySelector(`.${CSS_CONSTANTS.submitButton}`);
