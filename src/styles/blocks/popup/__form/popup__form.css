@@ -1,3 +1,7 @@
 .popup__form {
   margin-top: 27px;
 }
+
+/* inactiveButtonClass: 'popup__button_disabled',
+	inputErrorClass: 'popup__input_type_error',
+	errorClass: 'popup__error_visible' */

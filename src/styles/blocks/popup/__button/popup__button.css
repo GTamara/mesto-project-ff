@@ -25,3 +25,9 @@
     line-height: 17px;
   }
 }
+
+.popup__button_disabled {
+	pointer-events: none;
+	user-select: none;
+	filter: invert(75%) opacity(50%);
+}
