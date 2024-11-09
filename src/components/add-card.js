@@ -1,3 +1,4 @@
+import { CardRequests } from "../api/card-requests";
 import { CSS_CONSTANTS } from "../constants/css-constants";
 import { Card } from "./card";
 import { CardActions } from "./card-actions";
@@ -37,13 +38,17 @@ export class AddCard {
 
 	addNewCardPopupSubmit = () => {
 		const newCardData = this.getFormData();
-		const newCard = this.card.create(
-			newCardData,
-			this.cardActions.cardClick,
-			this.cardActions.deleteCard,
-			this.cardActions.toggleLike,
-		);
-		this.addNewCardToCardContainer(newCard);
+		new CardRequests().createCard(newCardData)
+			.then(response => {
+				const newCard = this.card.create(
+					response,
+					this.cardActions.cardClick,
+					this.cardActions.deleteCard,
+					this.cardActions.toggleLike,
+				);
+				this.addNewCardToCardContainer(newCard);
+			})
+			.catch(err => console.log(err));
 	}
 
 	addNewCardToCardContainer (cardElement) {

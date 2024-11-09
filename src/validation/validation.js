@@ -27,14 +27,23 @@ export class FormValidation {
 
 		fieldsArray.forEach(field => {
 			field.addEventListener('input', () => {
+				console.log(field.value.length)
+				debugger
 				this.checkFieldValidity(field);
 				const isFormValid = fieldsArray.every(field => field.validity.valid);
 				this.toggleButtonState(isFormValid, buttonElement);
 			});
+			// field.addEventListener('blur', () => {
+			// 	console.log('fsdf')
+			// 	this.checkFieldValidity(field);
+			// 	const isFormValid = fieldsArray.every(field => field.validity.valid);
+			// 	this.toggleButtonState(isFormValid, buttonElement);
+			// });
 		});
 	}
 
 	checkFieldValidity (field) {
+		// debugger
 		if (field.validity.valid) {
 			this.toggleErrorVisibility(true, field);
 		} else {

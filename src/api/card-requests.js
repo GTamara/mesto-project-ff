@@ -12,13 +12,28 @@ export class CardRequests {
 			if (res.ok) {
 				return res.json();
 			}
-			return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
+			return Promise.reject(`Ошибка получения карточек: ${res.status} ${res.statusText}`);
 		});
 
 	}
 
-	createCard () {
-
+	createCard (payload) {
+		return fetch(
+			`${BASE_SERVER_URL}cards`,
+			{
+				headers: {
+					...BASE_HTTP_HEADERS,
+					'Content-Type': 'application/json; charset=utf-8',
+				},
+				method: 'POST',
+				body: JSON.stringify(payload),
+			}
+		).then(res => {
+			if (res.ok) {
+				return res.json();
+			}
+			return Promise.reject(`Ошибка при добавлении новой карточки: ${res.status} ${res.statusText}`);
+		});
 	}
 
 	updateCard () {

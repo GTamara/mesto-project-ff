@@ -18,8 +18,8 @@ export class Modal {
 				.addEventListener(
 					'submit', 
 					(evt) => {
-						submitCallback();
 						evt.preventDefault();
+						submitCallback();
 						this.close(this.popup);
 					}
 				);
