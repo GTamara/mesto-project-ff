@@ -1,3 +1,4 @@
+import { CardRequests } from "../api/card-requests";
 import { POPUP_TYPES } from "../constants/popup-types";
 import { Modal } from "./modal";
 import { ShowFullSizeImage } from "./show-full-size-image";
@@ -11,10 +12,12 @@ export class CardActions {
 	showFullSizeImageInstance = new ShowFullSizeImage();
 	modal = new Modal(POPUP_TYPES.showFullSizeImage);
 
-	deleteCard(evt, card) {
+	deleteCard(evt, card, cardData) {
+		debugger
 		evt.stopPropagation();
-		card.remove();
-		
+		new CardRequests().deleteCard(cardData)
+			.then(() => card.remove())
+			.catch((err) => console.error(err))
 	}
 
 	toggleLike(evt) {

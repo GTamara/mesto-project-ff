@@ -4,16 +4,23 @@ export class Card {
 
 	// создание новой карточки
 	create (cardData, cardClickCallback, deleteCallback, likeCallback) {
-		const cardTemplate = document.querySelector('#card-template').content;
-		const cardElement = cardTemplate.querySelector(`.${CSS_CONSTANTS.cardItem}`).cloneNode(true);
+		const cardTemplate = document
+			.querySelector('#card-template')
+			.content;
+		const cardElement = cardTemplate
+			.querySelector(`.${CSS_CONSTANTS.cardItem}`)
+			.cloneNode(true);
+
 		const img = cardElement.querySelector(`.${CSS_CONSTANTS.cardImage}`);
-		img.src = cardData.link;
+		img.src = new URL(cardData.link);
 		img.alt = cardData.name;
+
 		cardElement.querySelector(`.${CSS_CONSTANTS.cardTitle}`).textContent = cardData.name;
+		cardElement.querySelector(`.${CSS_CONSTANTS.likesQuantity}`).textContent = cardData.likes.length;
 
 		cardElement
 			.querySelector('.card__delete-button')
-			.addEventListener('click', (evt) => deleteCallback(evt, cardElement));
+			.addEventListener('click', (evt) => deleteCallback(evt, cardElement, cardData));
 
 		cardElement
 			.querySelector('.card__like-button')

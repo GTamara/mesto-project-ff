@@ -33,7 +33,7 @@ export class EditProfile {
 		
 		this.profileRequests.updateProfileData(formData)
 			.then((response) => this.setProfileData(response))
-			.catch(err => console.log(err));
+			.catch(err => console.error(err));
 		
 	}
 

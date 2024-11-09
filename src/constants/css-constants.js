@@ -12,6 +12,7 @@ export const CSS_CONSTANTS = Object.freeze({
 	deleteCardButton: 'card__delete-button',
 	cardImage: 'card__image',
 	cardTitle: 'card__title',
+	likesQuantity: 'card__like-quantity',
 
 	form: 'popup__form',
 	submitButton: 'popup__button',

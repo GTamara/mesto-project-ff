@@ -28,12 +28,8 @@ Promise.all([
 	new ProfileRequests().getProfileData(),
 ]).then(([cards, profileData]) => {
 	cards.forEach(item => {
-		const cardData = {
-			name: item.name,
-			link: new URL(item.link),
-		};
 		const cardElement = card.create(
-			cardData,
+			item,
 			cardActions.cardClick,
 			cardActions.deleteCard,
 			cardActions.toggleLike,

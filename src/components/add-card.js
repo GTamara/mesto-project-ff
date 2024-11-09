@@ -48,7 +48,7 @@ export class AddCard {
 				);
 				this.addNewCardToCardContainer(newCard);
 			})
-			.catch(err => console.log(err));
+			.catch(err => console.error(err));
 	}
 
 	addNewCardToCardContainer (cardElement) {

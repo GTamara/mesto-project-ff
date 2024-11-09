@@ -40,8 +40,20 @@ export class CardRequests {
 
 	}
 
-	deleteCard () {
-
+	deleteCard (card) {
+		debugger
+		return fetch(
+			`${BASE_SERVER_URL}cards/${card._id}`,
+			{
+				headers: BASE_HTTP_HEADERS,
+				method: 'DELETE',
+			}
+		).then(res => {
+			if (res.ok) {
+				return res.json();
+			}
+			return Promise.reject(`Ошибка при удалении карточки: ${res.status} ${res.statusText}`);
+		});
 	}
 
 	// .then(res => res.json())
