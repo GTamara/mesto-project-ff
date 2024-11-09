@@ -8,15 +8,13 @@ export class CardRequests {
 			{
 				headers: BASE_HTTP_HEADERS,
 			}
-		).then(res => res.json())
-		// .then((result) => {
-		// 	return {
-		// 		name: "Иваново",
-		// 		link: new URL(
-		// 			"https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"
-		// 		),
-		// 	};
-		// }); 
+		).then(res => {
+			if (res.ok) {
+				return res.json();
+			}
+			return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
+		});
+
 	}
 
 	createCard () {

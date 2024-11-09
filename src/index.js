@@ -9,6 +9,7 @@ import { CardActions } from './components/card-actions.js';
 import { FormValidation } from './validation/validation.js';
 import { VALIDATION_CONFIG } from './validation/validation-config.js';
 import { CardRequests } from './api/card-requests.js';
+import { ProfileRequests } from './api/profile-requests.js';
 
 const card = new Card();
 const cardActions = new CardActions();
@@ -20,25 +21,29 @@ const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCar
 
 const validation = new FormValidation(VALIDATION_CONFIG);
 
-const initialCards = new CardRequests().getInitialCards();
-initialCards.then(cards => {
-		cards.forEach(item => {
-			const cardData = {
-				name: item.name,
-				link: new URL(
-					item.link,
-				),
-			};
-			const cardElement = card.create(
-				cardData,
-				cardActions.cardClick,
-				cardActions.deleteCard,
-				cardActions.toggleLike,
-			);
-			addCardInstance.addNewCardToCardContainer(cardElement);
-		})
-	})
-	.catch(err => console.log(err))
+// Получить карточки при загрузке страницы
+// получить данные профиля
+Promise.all([
+	new CardRequests().getInitialCards(),
+	new ProfileRequests().getProfileData(),
+]).then(([cards, profileData]) => {
+	cards.forEach(item => {
+		const cardData = {
+			name: item.name,
+			link: new URL(item.link),
+		};
+		const cardElement = card.create(
+			cardData,
+			cardActions.cardClick,
+			cardActions.deleteCard,
+			cardActions.toggleLike,
+		);
+		addCardInstance.addNewCardToCardContainer(cardElement);
+	});
+
+	editProfileInstance.setProfileData(profileData);
+	editProfileInstance.setProfileAvatar(profileData.avatar);
+}).catch(err => console.log(err));
 
 // слушатель для кнопки редактирования профиля
 document.querySelector(`.${CSS_CONSTANTS.editProfileButton}`) 
@@ -47,7 +52,7 @@ document.querySelector(`.${CSS_CONSTANTS.editProfileButton}`)
 		() => {
 			editProfileInstance.preparePopupBeforeOpening();
 			const formElement = editProfilePopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
-			validation.clearValidation(formElement);
+			validation.cleanForm(formElement);
 			editProfilePopup.open();
 		},
 	);
@@ -59,7 +64,7 @@ document.querySelector(`.${CSS_CONSTANTS.addNewCardButton}`)
 		() => {
 			addCardInstance.preparePopupBeforeOpening();
 			const formElement = addCardPopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
-			validation.clearValidation(formElement);
+			validation.cleanForm(formElement);
 			addCardPopup.open();
 		},
 	);

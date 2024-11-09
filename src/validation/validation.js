@@ -9,40 +9,32 @@ export class FormValidation {
 	enableValidation () {
 		const formsArray = Array.from(document.querySelectorAll(this.config.formSelector));
 		formsArray.forEach(form => {
-			// form.addEventListener('submit', evt => evt.preventDefault());
 			this.setEventListenersForFormFields(form);
 		})
 	}
 
 	clearValidation (form) {
 		const fieldsArray = Array.from(form.querySelectorAll(this.config.inputSelector));
-		const buttonElement = form.querySelector(this.config.submitButtonSelector);
 
 		fieldsArray.forEach(field => {
 			this.toggleErrorVisibility(true, field);
 		});
-
-		buttonElement.disabled = false;
-		this.toggleButtonState (true, buttonElement);
 	}
 
 	setEventListenersForFormFields (form) {
 		const fieldsArray = Array.from(form.querySelectorAll(this.config.inputSelector));
-		const buttonElement = form.querySelector(this.config.submitButtonSelector);
+		const buttonElement = this.getSubmitElement(form);
 
 		fieldsArray.forEach(field => {
 			field.addEventListener('input', () => {
 				this.checkFieldValidity(field);
-				const isFormInvalid = fieldsArray.some(field => !field.validity.valid);
-				this.toggleButtonState(!isFormInvalid, buttonElement);
+				const isFormValid = fieldsArray.every(field => field.validity.valid);
+				this.toggleButtonState(isFormValid, buttonElement);
 			});
 		});
 	}
 
 	checkFieldValidity (field) {
-		const val = field.value;
-		// const regexp = /^[\wа-яёА-Я\s\-]+$/;
-		// const res = /^[\wа-яёА-Я\s\-]+$/.test(val);
 		if (field.validity.valid) {
 			this.toggleErrorVisibility(true, field);
 		} else {
@@ -78,4 +70,14 @@ export class FormValidation {
 			buttonElement.disabled = true;
 		}
 	};
+
+	getSubmitElement (formElement) {
+		return formElement.querySelector(this.config.submitButtonSelector);
+	}
+
+	cleanForm (formElement) {
+		this.clearValidation(formElement);
+		const submitButton = this.getSubmitElement(formElement);
+		this.toggleButtonState(false, submitButton);
+	}
 }
