@@ -40,10 +40,9 @@ export class CardRequests {
 
 	}
 
-	deleteCard (card) {
-		debugger
+	deleteCard (cardData) {
 		return fetch(
-			`${BASE_SERVER_URL}cards/${card._id}`,
+			`${BASE_SERVER_URL}cards/${cardData._id}`,
 			{
 				headers: BASE_HTTP_HEADERS,
 				method: 'DELETE',
@@ -56,18 +55,35 @@ export class CardRequests {
 		});
 	}
 
-	// .then(res => res.json())
-	// .then((result) => {
-	//   console.log(result);
-	// }); 
+	toggleLike (cardId, shouldRemoveLike) {
 
+		if (shouldRemoveLike) {
+			return fetch(
+				`${BASE_SERVER_URL}cards/likes/${cardId}`,
+				{
+					headers: BASE_HTTP_HEADERS,
+					method: 'DELETE',
+				}
+			).then(res => {
+				if (res.ok) {
+					return res.json();
+				}
+				return Promise.reject(`Ошибка доавления лайка: ${res.status} ${res.statusText}`);
+			});
+		} else {
+			return fetch(
+				`${BASE_SERVER_URL}cards/likes/${cardId}`,
+				{
+					headers: BASE_HTTP_HEADERS,
+					method: 'PUT',
+				}
+			).then(res => {
+				if (res.ok) {
+					return res.json();
+				}
+				return Promise.reject(`Ошибка удаления лайка: ${res.status} ${res.statusText}`);
+			});
+		}
+	}
 
-
-
-	// .then((result) => {
-	// 	// обрабатываем результат
-	//   })
-	//   .catch((err) => {
-	// 	console.log(err); // выводим ошибку в консоль
-	//   });
 }

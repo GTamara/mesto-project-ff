@@ -19,8 +19,9 @@ export class Modal {
 					'submit', 
 					(evt) => {
 						evt.preventDefault();
-						submitCallback();
-						this.close(this.popup);
+						submitCallback().finally(() => {
+							this.close(this.popup);
+						});
 					}
 				);
 		}

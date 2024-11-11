@@ -20,6 +20,7 @@ const editProfilePopup = new Modal(POPUP_TYPES.editProfile, editProfileInstance.
 const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
 
 const validation = new FormValidation(VALIDATION_CONFIG);
+document.allCards = [];
 
 // Получить карточки при загрузке страницы
 // получить данные профиля
@@ -27,9 +28,11 @@ Promise.all([
 	new CardRequests().getInitialCards(),
 	new ProfileRequests().getProfileData(),
 ]).then(([cards, profileData]) => {
+	document.profileData = profileData;
 	cards.forEach(item => {
 		const cardElement = card.create(
 			item,
+			profileData,
 			cardActions.cardClick,
 			cardActions.deleteCard,
 			cardActions.toggleLike,

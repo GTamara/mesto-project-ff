@@ -9,10 +9,16 @@ export const CSS_CONSTANTS = Object.freeze({
 	cardContainer: 'places__list',
 	cardItem: 'card',
 	likeButton: 'card__like-button',
+	likeActive: 'card__like-button_is-active',
+
 	deleteCardButton: 'card__delete-button',
+	deleteCardButtonVisible: 'card__delete-button_visible',
 	cardImage: 'card__image',
 	cardTitle: 'card__title',
 	likesQuantity: 'card__like-quantity',
+	
+	spinner: 'popup-button__spinner',
+	buttonTitle: 'popup-button__title',
 
 	form: 'popup__form',
 	submitButton: 'popup__button',

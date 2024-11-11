@@ -1,3 +1,4 @@
+import { setLoading } from "../api/common-functions/set-loading";
 import { ProfileRequests } from "../api/profile-requests";
 
 const EDIT_PROFILE_CSS_SELECTORS = Object.freeze({
@@ -29,11 +30,20 @@ export class EditProfile {
 	}
 
 	setNewProfileDataSubmit = () => {
+		setLoading(true);
 		const formData = this.getFormData();
 		
-		this.profileRequests.updateProfileData(formData)
-			.then((response) => this.setProfileData(response))
-			.catch(err => console.error(err));
+		return this.profileRequests.updateProfileData(formData)
+			.then((response) => {
+
+				this.setProfileData(response);
+			})
+			.catch(err => {
+				console.error(err);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 		
 	}
 
