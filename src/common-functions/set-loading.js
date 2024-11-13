@@ -1,7 +1,6 @@
-import { CSS_CONSTANTS } from "../../constants/css-constants";
+import { CSS_CONSTANTS } from "../constants/css-constants";
 
 export const setLoading = (isLoading) => {
-	debugger
 	const openedPopup = document.querySelector(`.${CSS_CONSTANTS.popupIsOpened}`);
 	const spinnerElement = openedPopup.querySelector(`.${CSS_CONSTANTS.spinner}`);
 	const submitButtonTitleElement = openedPopup.querySelector(`.${CSS_CONSTANTS.buttonTitle}`);

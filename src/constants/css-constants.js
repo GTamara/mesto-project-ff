@@ -16,10 +16,12 @@ export const CSS_CONSTANTS = Object.freeze({
 	cardImage: 'card__image',
 	cardTitle: 'card__title',
 	likesQuantity: 'card__like-quantity',
-	
+
 	spinner: 'popup-button__spinner',
 	buttonTitle: 'popup-button__title',
 
 	form: 'popup__form',
 	submitButton: 'popup__button',
+
+	profileAvatar: 'profile__image',
 })

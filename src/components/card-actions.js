@@ -6,15 +6,19 @@ import { ShowFullSizeImage } from "./show-full-size-image";
 
 export class CardActions {
 
-	showFullSizeImageInstance = new ShowFullSizeImage();
-	modal = new Modal(POPUP_TYPES.showFullSizeImage);
 	cardRequests;
+	showFullSizeImageInstance = new ShowFullSizeImage();
+	fullSIzeImgPopup = new Modal(POPUP_TYPES.showFullSizeImage);
+	confirmPopup = new Modal(POPUP_TYPES.confirm, () => Promise(true));
 
 	constructor () {
 		this.cardRequests = new CardRequests();
 	}
 
+	// удалить карточку
 	deleteCard = (card, cardData) => {
+		this.confirmPopup.open()
+		document.getElementById('confirm-popup').showModal()
 		
 		this.cardRequests.deleteCard(cardData)
 			.then(() => {
@@ -23,6 +27,7 @@ export class CardActions {
 			.catch((err) => console.error(err));
 	}
 
+	// поставить / снять лайк
 	toggleLike = (cardData, profileData,likeButtonElement, cardElement) => {
 		const cardId = cardData._id;
 		const shouldRemoveLike = this.isCardLikedByCurrentUserCallback(cardData, profileData);
@@ -46,14 +51,15 @@ export class CardActions {
 		return cardDataFromState.likes.map(item => item._id).includes(currentUserId);
 	}
 
+	setLikesQuantity (cardElement, quantity) {
+		cardElement.querySelector(`.${CSS_CONSTANTS.likesQuantity}`).textContent = quantity;
+	}
+
+	// Открыть полноразмерную картинку
 	cardClick = (clickedCard) => {
 		this.showFullSizeImageInstance.preparePopupBeforeOpening(
 			clickedCard,
-			() => this.modal.open(),
+			() => this.fullSIzeImgPopup.open(),
 		);
-	}
-
-	setLikesQuantity (cardElement, quantity) {
-		cardElement.querySelector(`.${CSS_CONSTANTS.likesQuantity}`).textContent = quantity;
 	}
 }

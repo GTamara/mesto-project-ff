@@ -1,4 +1,4 @@
-import { setLoading } from "../api/common-functions/set-loading";
+import { setLoading } from "../common-functions/set-loading";
 import { ProfileRequests } from "../api/profile-requests";
 
 const EDIT_PROFILE_CSS_SELECTORS = Object.freeze({
@@ -44,7 +44,6 @@ export class EditProfile {
 			.finally(() => {
 				setLoading(false);
 			});
-		
 	}
 
 	setFormData (data) {
@@ -71,11 +70,6 @@ export class EditProfile {
 
 		currentProfileNameElement.textContent = data.name;
 		currentProfileJobElement.textContent = data.about;
-	}
-
-	setProfileAvatar (link) {
-		const avatarElement = document.querySelector(`.${EDIT_PROFILE_CSS_SELECTORS.profileAvatar}`);
-		avatarElement.style.backgroundImage = `url(${link})`;
 	}
 
 }

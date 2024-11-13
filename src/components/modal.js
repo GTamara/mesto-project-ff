@@ -4,7 +4,7 @@ export class Modal {
 
 	popup = undefined;
 
-	constructor (modalType, submitCallback) {
+	constructor (modalType, submitCallback, clickCallback) {
 		this.popup = document.querySelector(`.${modalType}`)
 
 		this.popup.addEventListener(
@@ -13,15 +13,30 @@ export class Modal {
 		);
 
 		// обработчики закрытия попапа END
+		const popup = this.popup.querySelector(`.${CSS_CONSTANTS.form}`);
+
 		if (!!submitCallback) {
-			this.popup.querySelector(`.${CSS_CONSTANTS.form}`)
-				.addEventListener(
+			popup.addEventListener(
 					'submit', 
 					(evt) => {
 						evt.preventDefault();
 						submitCallback().finally(() => {
 							this.close(this.popup);
 						});
+						return Promise.resolve(true);
+					}
+				);
+		}
+		
+		if (!!clickCallback) {
+			popup.addEventListener(
+					'click', 
+					(evt) => {
+						evt.preventDefault();
+						clickCallback().finally(() => {
+							this.close(this.popup);
+						});
+						return Promise.resolve(true);
 					}
 				);
 		}

@@ -1,5 +1,5 @@
 import { CardRequests } from "../api/card-requests";
-import { setLoading } from "../api/common-functions/set-loading";
+import { setLoading } from "../common-functions/set-loading";
 import { CSS_CONSTANTS } from "../constants/css-constants";
 
 const ADD_NEW_CARD_CSS_SELECTORS = Object.freeze({

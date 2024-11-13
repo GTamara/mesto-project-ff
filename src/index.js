@@ -10,14 +10,17 @@ import { FormValidation } from './validation/validation.js';
 import { VALIDATION_CONFIG } from './validation/validation-config.js';
 import { CardRequests } from './api/card-requests.js';
 import { ProfileRequests } from './api/profile-requests.js';
+import { UpdateAvatar } from './components/update-avatar.js';
 
 const card = new Card();
 const cardActions = new CardActions();
 const addCardInstance = new AddCard(card, cardActions);
 const editProfileInstance = new EditProfile();
+const updateAvatarInstance = new UpdateAvatar();
 
 const editProfilePopup = new Modal(POPUP_TYPES.editProfile, editProfileInstance.setNewProfileDataSubmit);
 const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCardPopupSubmit);
+const updateAvatarPopup = new Modal(POPUP_TYPES.updateAvatar, updateAvatarInstance.updateAvatarSubmit);
 
 const validation = new FormValidation(VALIDATION_CONFIG);
 document.allCards = [];
@@ -41,8 +44,8 @@ Promise.all([
 	});
 
 	editProfileInstance.setProfileData(profileData);
-	editProfileInstance.setProfileAvatar(profileData.avatar);
-}).catch(err => console.log(err));
+	updateAvatarInstance.setProfileAvatar(profileData.avatar);
+}).catch(err => console.error(err));
 
 // слушатель для кнопки редактирования профиля
 document.querySelector(`.${CSS_CONSTANTS.editProfileButton}`) 
@@ -68,6 +71,16 @@ document.querySelector(`.${CSS_CONSTANTS.addNewCardButton}`)
 		},
 	);
 
+document.querySelector(`.${CSS_CONSTANTS.profileAvatar}`)
+	.addEventListener(
+		'click', 
+			() => {
+			updateAvatarInstance.preparePopupBeforeOpening();
+			const formElement = updateAvatarPopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
+			validation.cleanForm(formElement);
+			updateAvatarPopup.open();
+		}
+	);
 
 validation.enableValidation();
 
