@@ -3,5 +3,5 @@ export const POPUP_TYPES = {
 	addNewCard: 'popup_type_new-card',
 	showFullSizeImage: 'popup_type_image',
 	updateAvatar: 'popup_type_update-avatar',
-	confirm: 'confirm',
+	confirm: 'popup_type_confirm',
 }

@@ -1,5 +1,5 @@
 import { ProfileRequests } from "../api/profile-requests";
-import { setLoading } from "../common-functions/set-loading";
+import { setLoading } from "../common-functions/common-functions";
 
 const EDIT_AVATAR_CSS_SELECTORS = Object.freeze({
 	formName: 'avatar',

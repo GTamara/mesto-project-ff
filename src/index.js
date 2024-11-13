@@ -37,7 +37,7 @@ Promise.all([
 			item,
 			profileData,
 			cardActions.cardClick,
-			cardActions.deleteCard,
+			cardActions.getDeleteConfirmation,
 			cardActions.toggleLike,
 		);
 		addCardInstance.addNewCardToCardContainer(cardElement);
@@ -81,6 +81,13 @@ document.querySelector(`.${CSS_CONSTANTS.profileAvatar}`)
 			updateAvatarPopup.open();
 		}
 	);
+
+// const buttonClickHandler = (ationInstance, actionPopup) => {
+// 	updateAvatarInstance.preparePopupBeforeOpening();
+// 	const formElement = updateAvatarPopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
+// 	validation.cleanForm(formElement);
+// 	updateAvatarPopup.open();
+// }
 
 validation.enableValidation();
 

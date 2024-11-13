@@ -1,4 +1,4 @@
-import { setLoading } from "../common-functions/set-loading";
+import { setLoading } from "../common-functions/common-functions";
 import { ProfileRequests } from "../api/profile-requests";
 
 const EDIT_PROFILE_CSS_SELECTORS = Object.freeze({

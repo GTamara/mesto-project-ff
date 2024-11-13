@@ -1,3 +1,4 @@
+import { isCardLikedByCurrentUser } from "../common-functions/common-functions";
 import { CSS_CONSTANTS } from "../constants/css-constants";
 
 export class Card {
@@ -9,7 +10,7 @@ export class Card {
 		profileData = profileData ? profileData : document.profileData;
 
 		if (this.isCardOwner(cardData, profileData)) {
-			this.addDeletionCardAction (cardElement, cardData, deleteCallback);
+			this.addDeletionCardAction(cardElement, cardData, deleteCallback);
 		}
 
 		this.addLikeAction(cardElement, cardData, profileData, likeCallback);
@@ -22,11 +23,6 @@ export class Card {
 		);
 
 		return cardElement;
-	}
-
-	isCardLikedByCurrentUserCallback (cardData, profileData) {
-		const currentUserId = profileData._id;
-		return cardData.likes.map(item => item._id).includes(currentUserId);
 	}
 
 	isCardOwner (card, profileData) {
@@ -57,7 +53,8 @@ export class Card {
 		deleteButtonElement.addEventListener('click', (evt) => {
 			evt.preventDefault();
 			evt.stopPropagation();
-			deleteCallback(cardElement, cardData);
+
+			return deleteCallback(cardElement, cardData);
 		});
 		deleteButtonElement.classList.add(CSS_CONSTANTS.deleteCardButtonVisible);
 	}
@@ -72,7 +69,7 @@ export class Card {
 			likeCallback(cardData, profileData, likeButton, cardElement);
 		});
 
-		if (!isNewCard && this.isCardLikedByCurrentUserCallback (cardData, profileData)) {
+		if (!isNewCard && isCardLikedByCurrentUser(cardData, profileData)) {
 			likeButton.classList.add(CSS_CONSTANTS.likeActive);
 		}
 	}

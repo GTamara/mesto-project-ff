@@ -13,10 +13,8 @@ export class Modal {
 		);
 
 		// обработчики закрытия попапа END
-		const popup = this.popup.querySelector(`.${CSS_CONSTANTS.form}`);
-
 		if (!!submitCallback) {
-			popup.addEventListener(
+			this.popup.querySelector(`.${CSS_CONSTANTS.form}`).addEventListener(
 					'submit', 
 					(evt) => {
 						evt.preventDefault();
@@ -29,10 +27,10 @@ export class Modal {
 		}
 		
 		if (!!clickCallback) {
-			popup.addEventListener(
+			this.popup.querySelector(`.${CSS_CONSTANTS.submitButton}`).addEventListener(
 					'click', 
 					(evt) => {
-						evt.preventDefault();
+						// evt.preventDefault();
 						clickCallback().finally(() => {
 							this.close(this.popup);
 						});

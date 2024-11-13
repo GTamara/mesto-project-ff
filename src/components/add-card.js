@@ -1,5 +1,5 @@
 import { CardRequests } from "../api/card-requests";
-import { setLoading } from "../common-functions/set-loading";
+import { setLoading } from "../common-functions/common-functions";
 import { CSS_CONSTANTS } from "../constants/css-constants";
 
 const ADD_NEW_CARD_CSS_SELECTORS = Object.freeze({
@@ -40,12 +40,11 @@ export class AddCard {
 		const newCardData = this.getFormData();
 		return new CardRequests().createCard(newCardData)
 			.then(response => {
-				// debugger
 				const newCard = this.card.create(
 					response,
 					null,
 					this.cardActions.cardClick,
-					this.cardActions.deleteCard,
+					this.cardActions.getDeleteConfirmation,
 					this.cardActions.toggleLike,
 				);
 				this.addNewCardToCardContainer(newCard);
