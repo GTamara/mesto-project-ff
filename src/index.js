@@ -23,6 +23,7 @@ const addCardPopup = new Modal(POPUP_TYPES.addNewCard, addCardInstance.addNewCar
 const updateAvatarPopup = new Modal(POPUP_TYPES.updateAvatar, updateAvatarInstance.updateAvatarSubmit);
 
 const validation = new FormValidation(VALIDATION_CONFIG);
+
 document.allCards = [];
 
 // Получить карточки при загрузке страницы
@@ -51,43 +52,27 @@ Promise.all([
 document.querySelector(`.${CSS_CONSTANTS.editProfileButton}`) 
 	.addEventListener(
 		'click', 
-		() => {
-			editProfileInstance.preparePopupBeforeOpening();
-			const formElement = editProfilePopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
-			validation.cleanForm(formElement);
-			editProfilePopup.open();
-		},
+		() => buttonClickHandler(editProfileInstance, editProfilePopup),
 	);
 
 // слушатель для кнопки добавления карточки
 document.querySelector(`.${CSS_CONSTANTS.addNewCardButton}`) 
 	.addEventListener(
 		'click', 
-		() => {
-			addCardInstance.preparePopupBeforeOpening();
-			const formElement = addCardPopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
-			validation.cleanForm(formElement);
-			addCardPopup.open();
-		},
+		() => buttonClickHandler(addCardInstance, addCardPopup),
 	);
 
 document.querySelector(`.${CSS_CONSTANTS.profileAvatar}`)
 	.addEventListener(
 		'click', 
-			() => {
-			updateAvatarInstance.preparePopupBeforeOpening();
-			const formElement = updateAvatarPopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
-			validation.cleanForm(formElement);
-			updateAvatarPopup.open();
-		}
+		() => buttonClickHandler(updateAvatarInstance, updateAvatarPopup),
 	);
-
-// const buttonClickHandler = (ationInstance, actionPopup) => {
-// 	updateAvatarInstance.preparePopupBeforeOpening();
-// 	const formElement = updateAvatarPopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
-// 	validation.cleanForm(formElement);
-// 	updateAvatarPopup.open();
-// }
+const buttonClickHandler = (ationInstance, actionPopup) => {
+	ationInstance.preparePopupBeforeOpening();
+	const formElement = actionPopup.popup.querySelector(`.${CSS_CONSTANTS.form}`);
+	validation.cleanForm(formElement);
+	actionPopup.open();
+}
 
 validation.enableValidation();
 

@@ -8,7 +8,8 @@ const EDIT_AVATAR_CSS_SELECTORS = Object.freeze({
 });
 
 export class UpdateAvatar {
-// https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzcDHE2e_esB-oszjgUzyLYva71cAjxSqmlw&s
+
+// Аватар https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzcDHE2e_esB-oszjgUzyLYva71cAjxSqmlw&s
 
 	profileRequests = new ProfileRequests();
 	formElement = document.forms[EDIT_AVATAR_CSS_SELECTORS.formName];

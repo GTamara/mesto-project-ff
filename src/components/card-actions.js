@@ -10,7 +10,6 @@ export class CardActions {
 	cardRequests;
 	showFullSizeImageInstance = new ShowFullSizeImage();
 	fullSIzeImgPopup = new Modal(POPUP_TYPES.showFullSizeImage);
-	
 
 	constructor () {
 		this.cardRequests = new CardRequests();
@@ -54,12 +53,6 @@ export class CardActions {
 			})
 			.catch((err) => console.error(err));
 	}
-
-	// isCardLikedByCurrentUserCallback (cardData, profileData) {
-	// 	const currentUserId = profileData._id;
-	// 	const cardDataFromState = document.allCards.find(item => item._id === cardData._id);
-	// 	return cardDataFromState.likes.map(item => item._id).includes(currentUserId);
-	// }
 
 	setLikesQuantity (cardElement, quantity) {
 		cardElement.querySelector(`.${CSS_CONSTANTS.likesQuantity}`).textContent = quantity;

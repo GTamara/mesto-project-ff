@@ -14,7 +14,6 @@ export class CardRequests {
 			}
 			return Promise.reject(`Ошибка получения карточек: ${res.status} ${res.statusText}`);
 		});
-
 	}
 
 	createCard (payload) {
@@ -34,10 +33,6 @@ export class CardRequests {
 			}
 			return Promise.reject(`Ошибка при добавлении новой карточки: ${res.status} ${res.statusText}`);
 		});
-	}
-
-	updateCard () {
-
 	}
 
 	deleteCard (cardData) {
