@@ -4,7 +4,7 @@ export class Modal {
 
 	popup = undefined;
 
-	constructor (modalType, submitCallback) {
+	constructor (modalType, submitCallback, clickCallback) {
 		this.popup = document.querySelector(`.${modalType}`)
 
 		this.popup.addEventListener(
@@ -14,15 +14,28 @@ export class Modal {
 
 		// обработчики закрытия попапа END
 		if (!!submitCallback) {
-			this.popup.querySelector(`.${CSS_CONSTANTS.form}`)
-				.addEventListener(
-					'submit', 
-					(evt) => {
-						submitCallback();
-						evt.preventDefault();
+			this.popup.querySelector(`.${CSS_CONSTANTS.form}`).addEventListener(
+				'submit', 
+				(evt) => {
+					evt.preventDefault();
+					submitCallback().finally(() => {
 						this.close(this.popup);
-					}
-				);
+					});
+					return Promise.resolve(true);
+				}
+			);
+		}
+		
+		if (!!clickCallback) {
+			this.popup.querySelector(`.${CSS_CONSTANTS.submitButton}`).addEventListener(
+				'click', 
+				(evt) => {
+					clickCallback().finally(() => {
+						this.close(this.popup);
+					});
+					return Promise.resolve(true);
+				}
+			);
 		}
 	}
 

@@ -1,6 +1,6 @@
+import { CardRequests } from "../api/card-requests";
+import { setLoading } from "../common-functions/common-functions";
 import { CSS_CONSTANTS } from "../constants/css-constants";
-import { Card } from "./card";
-import { CardActions } from "./card-actions";
 
 const ADD_NEW_CARD_CSS_SELECTORS = Object.freeze({
 	formName: 'new-place',
@@ -36,14 +36,23 @@ export class AddCard {
 	}
 
 	addNewCardPopupSubmit = () => {
+		setLoading(true);
 		const newCardData = this.getFormData();
-		const newCard = this.card.create(
-			newCardData,
-			this.cardActions.cardClick,
-			this.cardActions.deleteCard,
-			this.cardActions.toggleLike,
-		);
-		this.addNewCardToCardContainer(newCard);
+		return new CardRequests().createCard(newCardData)
+			.then(response => {
+				const newCard = this.card.create(
+					response,
+					null,
+					this.cardActions.cardClick,
+					this.cardActions.getDeleteConfirmation,
+					this.cardActions.toggleLike,
+				);
+				this.addNewCardToCardContainer(newCard);
+			})
+			.catch(err => console.error(err))
+			.finally(() => {
+				setLoading(false);
+			});
 	}
 
 	addNewCardToCardContainer (cardElement) {
